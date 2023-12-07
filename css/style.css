@@ -4,94 +4,151 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-#draw_container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: space-between;
-
-    .canvas {
-        width: 800px;
-        height: 800px;
-        border: 1px solid #000;
-    }
-
-    .options {
-        width: 20%;
-        position: relative;
-        right: -20%;
+    #draw_container {
+        width: 100%;
+        height: 100vh;
         display: flex;
-        flex-direction: column;
-        position: relative;
-        padding: 20px;
-        margin: 20px 0;
-        transition: all .5s;
-        border-radius: 5px 0 0 5px;
-        border-top: 1px solid #000;
-        border-left: 1px solid #000;
-        border-bottom: 1px solid #000;
+        justify-content: space-between;
 
-        &.active {
-            right: 0;
-        }
-        .toggle_option {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 20px;
-            left: -40px;
-            border-radius: 5px 0 0 5px;
-            border-top: 2px solid #000;
-            border-left: 2px solid #000;
-            border-bottom: 2px solid #000;
-            cursor: pointer;
+        .canvas_area {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-right: 1px solid #ccc;
 
-            .line {
-                width: 18px;
-                height: 2px;
-                display: block;
-                position: relative;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background-color: #000;
+            &.eraser {
+                cursor: none;
+            }
 
-                &::after {
-                    content: "";
-                    width: 100%;
-                    height: 100%;
+            .canvas {
+                width: 100%;
+                height: 100%;
+            }
+            .eraser_cursor {
+                display: none;
+
+                &.on {
+                    display: block;
+                    width: 3px;
+                    height: 3px;
                     position: absolute;
-                    top: 5px;
-                    left: 0;
-                    background-color: #000;
-                }
-                &::before {
-                    content: "";
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    top: -5px;
-                    left: 0;
-                    background-color: #000;
+                    top: 0px;
+                    left: 0px;
+                    border-radius: 50%;
+                    border: 1px solid #000;
+                    cursor: none;
+                    pointer-events: none;
+                    user-select: none;
+                    z-index: 9999;
+                    background-color: #fff;
                 }
             }
         }
-        .stroke_input_box {
+        .options {
+            position: relative;
+            right: -230px;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
+            padding: 20px;
+            margin: 5px 0;
+            transition: all 0.5s;
+            border-radius: 5px 0 0 5px;
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
+            border-bottom: 1px solid #000;
 
-            .stroke_title {
-                font-size: 16px;
-                font-weight: 400;
+            &.active {
+                right: 0;
             }
-            .stroke_input {
-                .stroke {
-                    vertical-align: text-top;
+            .option_btn {
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                top: 20px;
+                left: -40px;
+                border-radius: 5px 0 0 5px;
+                border-top: 1px solid #000;
+                border-left: 1px solid #000;
+                border-bottom: 1px solid #000;
+                cursor: pointer;
+
+                .line {
+                    width: 20px;
+                    height: 2px;
+                    display: block;
+                    position: relative;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #000;
+
+                    &::after {
+                        content: "";
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 6px;
+                        left: 0;
+                        background-color: #000;
+                    }
+                    &::before {
+                        content: "";
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: -6px;
+                        left: 0;
+                        background-color: #000;
+                    }
                 }
-                .step {
-                    padding-left: 10px;
+            }
+            .option_form {
+                display: flex;
+                flex-direction: column;
+                gap: 10px 0;
+                margin-bottom: 10px;
+
+                .color_box {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 0 20px;
+
+                    > .input_box {
+                        .input_item {
+                            > input {
+                                width: 50px;
+                            }
+                        }
+                    }
+                }
+                .input_box {
+                    display: flex;
+                    flex-direction: column;
+
+                    .input_title {
+                        font-size: 16px;
+                        font-weight: 400;
+                    }
+                    .input_item {
+                        > input {
+                            width: 80%;
+                        }
+                        .stroke {
+                            vertical-align: text-top;
+                        }
+                        .step {
+                            padding-left: 10px;
+                        }
+                    }
+                }
+            }
+            .btns_box {
+                .eraser,
+                .reset,
+                .draw {
+                    width: 60px;
                 }
             }
         }

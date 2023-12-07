@@ -8,10 +8,10 @@
         <meta name="author" content="김준호" />
         <meta name="keyword" content="그림, draw, drawing" />
         <meta property="og:title" content="Drawing" />
-        <!-- <meta property="og:url" content="https://github.com/KimJunHo98/project1"> -->
+        <meta property="og:url" content="https://github.com/KimJunHo98/draw-board" />
         <meta property="og:type" content="website" />
         <meta property="og:description" content="김준호 그림 앱 프로젝트" />
-        <title>Drawing</title>
+        <title>Draw Board</title>
 
         <link rel="stylesheet" href="css/reset.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -22,21 +22,51 @@
                 <h2 class="blind">그림판</h2>
                 <article class="canvas_area">
                     <canvas class="canvas"></canvas>
+                    <div class="eraser_cursor"></div>
                 </article>
                 <div class="options">
-                    <div class="toggle_option">
+                    <div class="option_btn">
                         <span class="line"></span>
                     </div>
                     <form class="option_form">
-                        <div class="stroke_input_box">
-                            <h3 class="stroke_title">선 굵기</h3>
-                            <div class="stroke_input">
+                        <div class="stroke_input_box input_box">
+                            <h3 class="input_title">선 굵기</h3>
+                            <div class="stroke_input input_item">
                                 <label for="stroke" class="blind">선 굵기</label>
                                 <input id="stroke" name="stroke" class="stroke" type="range" min="1" max="10" value="3" />
-                                <span class="step">3</span>
+                                <span class="stroke_step">3</span>
+                            </div>
+                        </div>
+                        <article class="color_box">
+                            <div class="color_input_box input_box">
+                                <h3 class="input_title">선 색상</h3>
+                                <div class="color_input input_item">
+                                    <label for="color" class="blind">선 색상</label>
+                                    <input id="color" name="color" class="color" type="color" value="#000000" />
+                                </div>
+                            </div>
+                            <div class="bgc_input_box input_box">
+                                <h3 class="input_title">배경 색상</h3>
+                                <div class="bgc_input input_item">
+                                    <label for="bgc" class="blind">배경 색상</label>
+                                    <input id="bgc" name="bgc" class="bgc" type="color" value="#ffffff" />
+                                </div>
+                            </div>
+                        </article>
+                        <div class="eraser_size_input_box input_box">
+                            <h3 class="input_title">지우개 크기</h3>
+                            <div class="eraser_size_input input_item">
+                                <label for="eraserSize" class="blind">지우개 크기</label>
+                                <input id="eraserSize" name="eraserSize" class="eraser_size" disabled="true" type="range" min="1" max="50" value="3" />
+                                <span class="eraserSize_step">3</span>
                             </div>
                         </div>
                     </form>
+                    <div class="btns_box">
+                        <button class="eraser">지우개</button>
+                        <button class="draw">그리기</button>
+                        <button class="reset">초기화</button>
+                    </div>
                 </div>
             </section>
         </div>
