@@ -18,57 +18,97 @@
     </head>
     <body>
         <div id="wrap">
-            <section id="draw_container">
-                <h2 class="blind">그림판</h2>
-                <article class="canvas_area">
-                    <canvas class="canvas"></canvas>
-                    <div class="eraser_cursor"></div>
-                </article>
-                <div class="options">
-                    <div class="option_btn">
-                        <span class="line"></span>
-                    </div>
-                    <form class="option_form">
-                        <div class="stroke_input_box input_box">
-                            <h3 class="input_title">선 굵기</h3>
-                            <div class="stroke_input input_item">
-                                <label for="stroke" class="blind">선 굵기</label>
-                                <input id="stroke" name="stroke" class="stroke" type="range" min="1" max="10" value="3" />
-                                <span class="stroke_step">3</span>
-                            </div>
+            <header id="header">
+                <h1 class="logo">Draw Board</h1>
+            </header>
+            <main>
+                <section id="draw_container">
+                    <h2 class="blind">그림판</h2>
+                    <article class="canvas_area">
+                        <h2 class="blind">캔버스 영역</h2>
+                        <canvas class="canvas"></canvas>
+                        <div class="eraser_cursor"></div>
+                    </article>
+                    <div class="options">
+                        <div class="option_btn">
+                            <span class="line"></span>
                         </div>
-                        <article class="color_box">
-                            <div class="color_input_box input_box">
-                                <h3 class="input_title">선 색상</h3>
-                                <div class="color_input input_item">
-                                    <label for="color" class="blind">선 색상</label>
-                                    <input id="color" name="color" class="color" type="color" value="#000000" />
+                        <form class="option_form">
+                            <div class="stroke_input_box input_box">
+                                <h3 class="input_title">선 굵기</h3>
+                                <div class="stroke_input input_item">
+                                    <label for="stroke" class="blind">선 굵기</label>
+                                    <input id="stroke" name="stroke" class="stroke" type="range" min="1" max="10" value="3" />
+                                    <span class="stroke_step">3</span>
                                 </div>
                             </div>
-                            <div class="bgc_input_box input_box">
-                                <h3 class="input_title">배경 색상</h3>
-                                <div class="bgc_input input_item">
-                                    <label for="bgc" class="blind">배경 색상</label>
-                                    <input id="bgc" name="bgc" class="bgc" type="color" value="#ffffff" />
+                            <div class="color_box">
+                                <div class="color_input_box input_box">
+                                    <h3 class="input_title">선 색상</h3>
+                                    <div class="color_input input_item">
+                                        <label for="color" class="blind">선 색상</label>
+                                        <input id="color" name="color" class="color" type="color" value="#000000" />
+                                    </div>
+                                </div>
+                                <div class="bgc_input_box input_box">
+                                    <h3 class="input_title">배경 색상</h3>
+                                    <div class="bgc_input input_item">
+                                        <label for="bgc" class="blind">배경 색상</label>
+                                        <input id="bgc" name="bgc" class="bgc" type="color" value="#ffffff" />
+                                    </div>
                                 </div>
                             </div>
-                        </article>
-                        <div class="eraser_size_input_box input_box">
-                            <h3 class="input_title">지우개 크기</h3>
-                            <div class="eraser_size_input input_item">
-                                <label for="eraserSize" class="blind">지우개 크기</label>
-                                <input id="eraserSize" name="eraserSize" class="eraser_size" disabled="true" type="range" min="1" max="50" value="3" />
-                                <span class="eraserSize_step">3</span>
+                            <div class="eraser_size_input_box input_box">
+                                <h3 class="input_title">지우개 크기</h3>
+                                <div class="eraser_size_input input_item">
+                                    <label for="eraserSize" class="blind">지우개 크기</label>
+                                    <input
+                                        id="eraserSize"
+                                        name="eraserSize"
+                                        class="eraser_size"
+                                        disabled="true"
+                                        type="range"
+                                        min="1"
+                                        max="50"
+                                        value="3"
+                                />
+                                    <span class="eraserSize_step">3</span>
+                                </div>
                             </div>
+                            <div class="image_input_box input_box">
+                                <div class="image_input input_item">
+                                    <label for="image" class="add_image">이미지 삽입</label>
+                                    <input id="image" name="image" class="image" type="file" accept="image/*" />
+                                    <button class="full_size" type="button">화면에 맞추기</button>
+                                    <div class="image_size_box">
+                                        <label for="imgWidth" class="image_size">가로</label>
+                                        <input id="imgWidth" name="imgWidth" class="img_width" type="number" value="100" />
+                                        <label for="imgHeight" class="image_size">세로</label>
+                                        <input id="imgHeight" name="imgHeight" class="img_height" type="number" value="100" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text_input_box input_box">
+                                <h3 class="input_title">텍스트 삽입</h3>
+                                <div class="text_input input_item">
+                                    <label for="text" class="blind">텍스트 삽입</label>
+                                    <input id="text" name="text" class="text" placeholder="화면을 더블 클릭하여 삽입" />
+                                    <label for="textSize" class="text_sizing">텍스트 크기</label>
+                                    <input id="textSize" name="textSize" class="text_size" type="number" value="16" />px
+                                </div>
+                            </div>
+                        </form>
+                        <div class="btns_box">
+                            <button class="eraser">지우개</button>
+                            <button class="draw">그리기</button>
+                            <button class="reset">초기화</button>
                         </div>
-                    </form>
-                    <div class="btns_box">
-                        <button class="eraser">지우개</button>
-                        <button class="draw">그리기</button>
-                        <button class="reset">초기화</button>
                     </div>
-                </div>
-            </section>
+                </section>
+            </main>
+            <footer id="footer">
+                <p class="copy">Draw Board &copy; by kimjunho</p>
+            </footer>
         </div>
 
         <script src="js/app.js"></script>
