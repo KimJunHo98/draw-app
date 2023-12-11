@@ -168,7 +168,7 @@
                 .text_input_box {
                     .text_input {
                         .text {
-                            padding: 5px 5px;
+                            padding: 2px 0 2px 5px;
 
                             &::placeholder {
                                 color: #999;
@@ -212,7 +212,8 @@
             .btns_box {
                 .eraser,
                 .reset,
-                .draw {
+                .draw,
+                .save {
                     width: 60px;
                 }
             }

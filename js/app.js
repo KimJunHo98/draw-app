@@ -12,6 +12,7 @@ const eraserCursor = document.querySelector(".eraser_cursor");
 const eraserSize = document.querySelector(".eraser_size");
 const draw = document.querySelector(".draw");
 const reset = document.querySelector(".reset");
+const saveBtn = document.querySelector(".save");
 const options = document.querySelector(".options");
 const optionBtn = document.querySelector(".option_btn");
 const stroke_step = document.querySelector(".stroke_step");
@@ -30,6 +31,7 @@ const screenHeight = window.innerHeight || document.documentElement.clientHeight
 canvas.width = screenWidth;
 canvas.height = screenHeight;
 ctx.lineWidth = stroke.value;
+ctx.lineCap = "round";
 
 // 마우스 커서 함수
 function handleMouseMove(e) {
@@ -158,18 +160,28 @@ function handleFullSizeBtnClick() {
 }
 
 // 텍스트 화면 삽입 함수
-function handleDoubleClick(e){
+function handleDoubleClick(e) {
     const x = e.offsetX;
     const y = e.offsetY;
     const txt = text.value;
 
-    if(txt !== ""){
+    if (txt !== "") {
         ctx.lineWidth = 1;
         ctx.font = `${textSize.value}px sans-serif`;
         ctx.fillText(txt, x, y);
-    
+
         ctx.lineWidth = stroke.value;
     }
+}
+
+// 저장 함수
+function handleSaveBtnClick() {
+    const url = canvas.toDataURL();
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "mydrawing.jpg";
+    a.click();
 }
 
 // 리셋 함수
@@ -215,5 +227,6 @@ eraserSize.addEventListener("change", handleEraserSizeChange);
 draw.addEventListener("click", handleDrawclick);
 reset.addEventListener("click", handleResetClick);
 image.addEventListener("change", handleImageChange);
+saveBtn.addEventListener("click", handleSaveBtnClick);
 fullsizeBtn.addEventListener("click", handleFullSizeBtnClick);
 optionBtn.addEventListener("click", handleOptionsClick);
