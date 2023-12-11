@@ -8,5 +8,5 @@
 제작했습니다.
 
 ## 완성작 보기 
-미리보기 : [draw-board.vercel.app](https://draw-board.vercel.app/)https://draw-board.vercel.app/
+미리보기 : [draw-board.vercel.app](https://draw-board.vercel.app/)
 
