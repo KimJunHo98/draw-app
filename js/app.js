@@ -4,6 +4,7 @@ const stroke = document.querySelector(".stroke");
 const color = document.querySelector(".color");
 const bgc = document.querySelector(".bgc");
 const image = document.querySelector(".image");
+const imageBtn = document.querySelector(".add_image");
 const imgWidth = document.querySelector(".img_width");
 const imgHeight = document.querySelector(".img_height");
 const fullsizeBtn = document.querySelector(".full_size");
@@ -139,6 +140,12 @@ function handleDrawclick() {
     }
 }
 
+// 이미지 파일 창 열기
+function handleImageBtnClick(e){
+    e.preventDefault();
+
+    image.click();
+}
 // 이미지 삽입 함수
 function handleImageChange(e) {
     const file = e.target.files[0];
@@ -154,7 +161,9 @@ function handleImageChange(e) {
     };
 }
 // 이미지크기 변경 함수
-function handleFullSizeBtnClick() {
+function handleFullSizeBtnClick(e) {
+    e.preventDefault();
+
     imgWidth.value = canvas.width;
     imgHeight.value = canvas.height;
 }
@@ -226,6 +235,7 @@ eraser.addEventListener("click", handleEraserClick);
 eraserSize.addEventListener("change", handleEraserSizeChange);
 draw.addEventListener("click", handleDrawclick);
 reset.addEventListener("click", handleResetClick);
+imageBtn.addEventListener("click", handleImageBtnClick);
 image.addEventListener("change", handleImageChange);
 saveBtn.addEventListener("click", handleSaveBtnClick);
 fullsizeBtn.addEventListener("click", handleFullSizeBtnClick);
