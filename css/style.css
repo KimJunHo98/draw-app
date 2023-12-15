@@ -1,4 +1,6 @@
 #wrap {
+    width: 100%;
+    height: 100%;
     position: relative;
 
     #header {
@@ -15,7 +17,7 @@
     }
     #draw_container {
         width: 100%;
-        height: 100vh;
+        height: 100%;
         display: flex;
         justify-content: space-between;
         overflow: hidden;
@@ -142,15 +144,7 @@
                 .image_input_box {
                     .image_input {
                         .add_image {
-                            padding: 1px 10px;
-                            border-radius: 3px;
-                            border: 1px solid #555;
-                            font-size: 14px;
-                            background-color: #eee;
-
-                            &:hover {
-                                background-color: #e4e4e4;
-                            }
+                            padding: 0 8px;
                         }
                         .image {
                             display: none;
