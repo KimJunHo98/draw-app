@@ -20,7 +20,6 @@
         height: 100%;
         display: flex;
         justify-content: space-between;
-        overflow: hidden;
 
         .canvas_area {
             width: 100%;
