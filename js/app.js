@@ -29,15 +29,15 @@ let isDraw = false;
 const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-canvas.width = screenWidth;
-canvas.height = screenHeight;
+canvas.width = screenWidth * 2;
+canvas.height = screenHeight * 2;
 ctx.lineWidth = stroke.value;
 ctx.lineCap = "round";
 
 // 마우스 커서 함수
 function handleMouseMove(e) {
-    const x = e.offsetX;
-    const y = e.offsetY;
+    const x = e.offsetX * 2;
+    const y = e.offsetY * 2;
 
     if (isPainting) {
         ctx.lineTo(x, y);
@@ -102,20 +102,23 @@ function handleEraserClick(e) {
         canvasArea.classList.add("eraser");
     }
 }
-// 지우개 커서 함수
-function handleMouseMoveWithEraser(e) {
-    const x = e.clientX - eraserSize.value / 2;
-    const y = e.clientY - eraserSize.value / 2;
-
-    eraserCursor.style.left = x + "px";
-    eraserCursor.style.top = y + "px";
-}
 // 지우개 크기변경 함수
 function handleEraserSizeChange(e) {
-    ctx.lineWidth = e.target.value;
+    ctx.lineWidth = e.target.value * 2;
     eraserCursor.style.width = e.target.value + "px";
     eraserCursor.style.height = e.target.value + "px";
     eraserSizeStep.innerText = e.target.value;
+}
+// 지우개 커서 함수
+function handleMouseMoveWithEraser(e) {
+    const eraserSizeValue = parseInt(eraserSize.value);
+    const x = e.offsetX - eraserSizeValue / 2;
+    const y = e.offsetY - eraserSizeValue / 2;
+
+    eraserCursor.style.width = eraserSizeValue + "px";
+    eraserCursor.style.height = eraserSizeValue + "px";
+    eraserCursor.style.left = x + "px";
+    eraserCursor.style.top = y + "px";
 }
 
 // 그리기 함수
@@ -163,6 +166,8 @@ function handleImageChange(e) {
 // 이미지크기 변경 함수
 function handleFullSizeBtnClick(e) {
     e.preventDefault();
+    canvas.width = screenWidth;
+    canvas.height = screenHeight;
 
     imgWidth.value = canvas.width;
     imgHeight.value = canvas.height;
@@ -170,8 +175,8 @@ function handleFullSizeBtnClick(e) {
 
 // 텍스트 화면 삽입 함수
 function handleDoubleClick(e) {
-    const x = e.offsetX;
-    const y = e.offsetY;
+    const x = e.offsetX * 2;
+    const y = e.offsetY * 2;
     const txt = text.value;
 
     if (txt !== "") {
