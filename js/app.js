@@ -20,228 +20,233 @@ const stroke_step = document.querySelector(".stroke_step");
 const eraserSizeStep = document.querySelector(".eraserSize_step");
 const text = document.querySelector(".text");
 const textSize = document.querySelector(".text_size");
-const ctx = canvas.getContext("2d");
 
 let isPainting = false;
 let isDelete = false;
 let isDraw = false;
 
-const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+if (canvas.getContext) {
+    const ctx = canvas.getContext("2d");
 
-canvas.width = screenWidth * 2;
-canvas.height = screenHeight * 2;
-ctx.lineWidth = stroke.value;
-ctx.lineCap = "round";
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-// 마우스 커서 함수
-function handleMouseMove(e) {
-    const x = e.offsetX * 2;
-    const y = e.offsetY * 2;
+    canvas.width = screenWidth * 2;
+    canvas.height = screenHeight * 2;
+    ctx.lineWidth = stroke.value;
+    ctx.lineCap = "round";
 
-    if (isPainting) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
+    // 마우스 커서 함수
+    function handleMouseMove(e) {
+        const x = e.offsetX * 2;
+        const y = e.offsetY * 2;
 
-        return;
+        if (isPainting) {
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            return;
+        }
+
+        ctx.moveTo(x, y);
     }
 
-    ctx.moveTo(x, y);
-}
+    // 마우스를 누르지 않을 때(false) 그리기 종료
+    function canclePainting() {
+        isPainting = false;
 
-// 마우스를 누르지 않을 때(false) 그리기 종료
-function canclePainting() {
-    isPainting = false;
+        ctx.beginPath();
+    }
+    // 마우스를 누르고 있을 때(true)만 그리기
+    function startPainting() {
+        isPainting = true;
+    }
 
-    ctx.beginPath();
-}
-// 마우스를 누르고 있을 때(true)만 그리기
-function startPainting() {
-    isPainting = true;
-}
-
-// 선 굵기 변경 함수
-function handlestrokeChange(e) {
-    ctx.lineWidth = e.target.value;
-    stroke_step.innerText = e.target.value;
-}
-
-// 토글 옵션메뉴 함수
-const handleOptionsClick = () => {
-    options.classList.toggle("active");
-};
-
-// 색상 변경 함수
-function handleColorChange(e) {
-    const { value } = e.target;
-
-    ctx.strokeStyle = value;
-    ctx.fillStyle = value;
-}
-function handleBackgroundColorChange(e) {
-    ctx.fillStyle = e.target.value;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-// 지우기 함수
-function handleEraserClick(e) {
-    isDelete = true;
-
-    if (isDelete) {
+    // 선 굵기 변경 함수
+    function handlestrokeChange(e) {
         ctx.lineWidth = e.target.value;
-        ctx.strokeStyle = bgc.value;
-        ctx.fillStyle = bgc.value;
-
-        stroke.disabled = true;
-
-        eraserSize.disabled = false;
-        eraserCursor.style.width = stroke.value;
-        eraserCursor.style.height = stroke.value;
-
-        eraserCursor.classList.add("on");
-        canvasArea.classList.add("eraser");
+        stroke_step.innerText = e.target.value;
     }
-}
-// 지우개 크기변경 함수
-function handleEraserSizeChange(e) {
-    ctx.lineWidth = e.target.value * 2;
-    eraserCursor.style.width = e.target.value + "px";
-    eraserCursor.style.height = e.target.value + "px";
-    eraserSizeStep.innerText = e.target.value;
-}
-// 지우개 커서 함수
-function handleMouseMoveWithEraser(e) {
-    const eraserSizeValue = parseInt(eraserSize.value);
-    const x = e.offsetX - eraserSizeValue / 2;
-    const y = e.offsetY - eraserSizeValue / 2;
 
-    eraserCursor.style.width = eraserSizeValue + "px";
-    eraserCursor.style.height = eraserSizeValue + "px";
-    eraserCursor.style.left = x + "px";
-    eraserCursor.style.top = y + "px";
-}
+    // 토글 옵션메뉴 함수
+    const handleOptionsClick = () => {
+        options.classList.toggle("active");
+    };
 
-// 그리기 함수
-function handleDrawclick() {
-    isDelete = false;
+    // 색상 변경 함수
+    function handleColorChange(e) {
+        const { value } = e.target;
 
-    if (!isDelete) {
-        ctx.lineWidth = stroke.value;
-        ctx.strokeStyle = color.value;
-        ctx.fillStyle = color.value;
+        ctx.strokeStyle = value;
+        ctx.fillStyle = value;
+    }
+    function handleBackgroundColorChange(e) {
+        ctx.fillStyle = e.target.value;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // 지우기 함수
+    function handleEraserClick(e) {
+        isDelete = true;
+
+        if (isDelete) {
+            ctx.lineWidth = e.target.value;
+            ctx.strokeStyle = bgc.value;
+            ctx.fillStyle = bgc.value;
+
+            stroke.disabled = true;
+
+            eraserSize.disabled = false;
+            eraserCursor.style.width = stroke.value;
+            eraserCursor.style.height = stroke.value;
+
+            eraserCursor.classList.add("on");
+            canvasArea.classList.add("eraser");
+        }
+    }
+    // 지우개 크기변경 함수
+    function handleEraserSizeChange(e) {
+        ctx.lineWidth = e.target.value * 2;
+        eraserCursor.style.width = e.target.value + "px";
+        eraserCursor.style.height = e.target.value + "px";
+        eraserSizeStep.innerText = e.target.value;
+    }
+    // 지우개 커서 함수
+    function handleMouseMoveWithEraser(e) {
+        const eraserSizeValue = parseInt(eraserSize.value);
+        const x = e.offsetX - eraserSizeValue / 2;
+        const y = e.offsetY - eraserSizeValue / 2;
+
+        eraserCursor.style.width = eraserSizeValue + "px";
+        eraserCursor.style.height = eraserSizeValue + "px";
+        eraserCursor.style.left = x + "px";
+        eraserCursor.style.top = y + "px";
+    }
+
+    // 그리기 함수
+    function handleDrawclick() {
+        isDelete = false;
+
+        if (!isDelete) {
+            ctx.lineWidth = stroke.value;
+            ctx.strokeStyle = color.value;
+            ctx.fillStyle = color.value;
+
+            stroke.disabled = false;
+
+            eraserSize.value = 3;
+            eraserSize.disabled = true;
+            eraserCursor.style.width = 3 + "px";
+            eraserCursor.style.height = 3 + "px";
+            eraserSizeStep.innerText = eraserSize.value;
+
+            eraserCursor.classList.remove("on");
+            canvasArea.classList.remove("eraser");
+        }
+    }
+
+    // 이미지 파일 창 열기
+    function handleImageBtnClick(e) {
+        e.preventDefault();
+
+        image.click();
+    }
+    // 이미지 삽입 함수
+    function handleImageChange(e) {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        const image = new Image();
+        const width = imgWidth.value;
+        const height = imgHeight.value;
+
+        image.src = url;
+        image.onload = function () {
+            ctx.drawImage(image, 0, 0, width, height);
+            image.value = "";
+        };
+    }
+    // 이미지크기 변경 함수
+    function handleFullSizeBtnClick(e) {
+        e.preventDefault();
+        canvas.width = screenWidth;
+        canvas.height = screenHeight;
+
+        imgWidth.value = canvas.width;
+        imgHeight.value = canvas.height;
+    }
+
+    // 텍스트 화면 삽입 함수
+    function handleDoubleClick(e) {
+        const x = e.offsetX * 2;
+        const y = e.offsetY * 2;
+        const txt = text.value;
+
+        if (txt !== "") {
+            ctx.lineWidth = 1;
+            ctx.font = `${textSize.value}px sans-serif`;
+            ctx.fillText(txt, x, y);
+
+            ctx.lineWidth = stroke.value;
+        }
+    }
+
+    // 저장 함수
+    function handleSaveBtnClick() {
+        const url = canvas.toDataURL();
+        const a = document.createElement("a");
+
+        a.href = url;
+        a.download = "mydrawing.jpg";
+        a.click();
+    }
+
+    // 리셋 함수
+    function handleResetClick() {
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         stroke.disabled = false;
+        stroke.value = 3;
+        stroke_step.innerText = 3;
 
+        eraserSizeStep.innerText = 3;
         eraserSize.value = 3;
         eraserSize.disabled = true;
         eraserCursor.style.width = 3 + "px";
         eraserCursor.style.height = 3 + "px";
-        eraserSizeStep.innerText = eraserSize.value;
 
-        eraserCursor.classList.remove("on");
-        canvasArea.classList.remove("eraser");
-    }
-}
+        color.value = "#000000";
+        bgc.value = "#ffffff";
 
-// 이미지 파일 창 열기
-function handleImageBtnClick(e){
-    e.preventDefault();
-
-    image.click();
-}
-// 이미지 삽입 함수
-function handleImageChange(e) {
-    const file = e.target.files[0];
-    const url = URL.createObjectURL(file);
-    const image = new Image();
-    const width = imgWidth.value;
-    const height = imgHeight.value;
-
-    image.src = url;
-    image.onload = function () {
-        ctx.drawImage(image, 0, 0, width, height);
         image.value = "";
-    };
-}
-// 이미지크기 변경 함수
-function handleFullSizeBtnClick(e) {
-    e.preventDefault();
-    canvas.width = screenWidth;
-    canvas.height = screenHeight;
+        imgWidth.value = 100;
+        imgHeight.value = 100;
 
-    imgWidth.value = canvas.width;
-    imgHeight.value = canvas.height;
-}
+        text.value = "";
+        textSize.value = 16;
 
-// 텍스트 화면 삽입 함수
-function handleDoubleClick(e) {
-    const x = e.offsetX * 2;
-    const y = e.offsetY * 2;
-    const txt = text.value;
-
-    if (txt !== "") {
-        ctx.lineWidth = 1;
-        ctx.font = `${textSize.value}px sans-serif`;
-        ctx.fillText(txt, x, y);
-
-        ctx.lineWidth = stroke.value;
+        handleDrawclick();
     }
+
+    canvas.addEventListener("pointermove", handleMouseMove);
+    canvas.addEventListener("pointerup", canclePainting);
+    canvas.addEventListener("pointerdown", startPainting);
+    canvas.addEventListener("pointerleave", canclePainting);
+    canvas.addEventListener("dblclick", handleDoubleClick);
+    canvasArea.addEventListener("pointermove", handleMouseMoveWithEraser);
+
+    stroke.addEventListener("change", handlestrokeChange);
+    color.addEventListener("change", handleColorChange);
+    bgc.addEventListener("change", handleBackgroundColorChange);
+    eraser.addEventListener("click", handleEraserClick);
+    eraserSize.addEventListener("change", handleEraserSizeChange);
+    draw.addEventListener("click", handleDrawclick);
+    reset.addEventListener("click", handleResetClick);
+    imageBtn.addEventListener("click", handleImageBtnClick);
+    image.addEventListener("change", handleImageChange);
+    saveBtn.addEventListener("click", handleSaveBtnClick);
+    fullsizeBtn.addEventListener("click", handleFullSizeBtnClick);
+    optionBtn.addEventListener("click", handleOptionsClick);
+} else {
+    console.log("canvas를 지원하지 않는 브라우저입니다.");
 }
-
-// 저장 함수
-function handleSaveBtnClick() {
-    const url = canvas.toDataURL();
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = "mydrawing.jpg";
-    a.click();
-}
-
-// 리셋 함수
-function handleResetClick() {
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    stroke.disabled = false;
-    stroke.value = 3;
-    stroke_step.innerText = 3;
-
-    eraserSizeStep.innerText = 3;
-    eraserSize.value = 3;
-    eraserSize.disabled = true;
-    eraserCursor.style.width = 3 + "px";
-    eraserCursor.style.height = 3 + "px";
-
-    color.value = "#000000";
-    bgc.value = "#ffffff";
-
-    image.value = "";
-    imgWidth.value = 100;
-    imgHeight.value = 100;
-
-    text.value = "";
-    textSize.value = 16;
-
-    handleDrawclick();
-}
-
-canvas.addEventListener("pointermove", handleMouseMove);
-canvas.addEventListener("pointerup", canclePainting);
-canvas.addEventListener("pointerdown", startPainting);
-canvas.addEventListener("pointerleave", canclePainting);
-canvas.addEventListener("dblclick", handleDoubleClick);
-canvasArea.addEventListener("pointermove", handleMouseMoveWithEraser);
-
-stroke.addEventListener("change", handlestrokeChange);
-color.addEventListener("change", handleColorChange);
-bgc.addEventListener("change", handleBackgroundColorChange);
-eraser.addEventListener("click", handleEraserClick);
-eraserSize.addEventListener("change", handleEraserSizeChange);
-draw.addEventListener("click", handleDrawclick);
-reset.addEventListener("click", handleResetClick);
-imageBtn.addEventListener("click", handleImageBtnClick);
-image.addEventListener("change", handleImageChange);
-saveBtn.addEventListener("click", handleSaveBtnClick);
-fullsizeBtn.addEventListener("click", handleFullSizeBtnClick);
-optionBtn.addEventListener("click", handleOptionsClick);
